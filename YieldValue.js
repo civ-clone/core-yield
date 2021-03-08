@@ -15,8 +15,10 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var _provider, _value;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.YieldValue = void 0;
-class YieldValue {
+const DataObject_1 = require("@civ-clone/core-data-object/DataObject");
+class YieldValue extends DataObject_1.DataObject {
     constructor(value, provider = '') {
+        super();
         _provider.set(this, void 0);
         _value.set(this, void 0);
         if (value instanceof YieldValue) {
@@ -25,6 +27,7 @@ class YieldValue {
         }
         __classPrivateFieldSet(this, _value, value);
         __classPrivateFieldSet(this, _provider, provider);
+        this.addKey('value', 'provider');
     }
     provider() {
         return __classPrivateFieldGet(this, _provider);

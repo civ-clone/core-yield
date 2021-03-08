@@ -1,8 +1,12 @@
-export interface IYieldModifier {
+import {
+  DataObject,
+  IDataObject,
+} from '@civ-clone/core-data-object/DataObject';
+export interface IYieldModifier extends IDataObject {
   provider(): any;
   value(): number;
 }
-export declare class YieldValue implements IYieldModifier {
+export declare class YieldValue extends DataObject implements IYieldModifier {
   #private;
   constructor(value: number | YieldValue, provider?: string);
   provider(): string;
