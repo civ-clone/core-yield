@@ -1,5 +1,4 @@
-import Yield from '../Yield';
-import YieldValue from '../YieldValue';
+import { Yield, YieldValue } from '../Yield';
 import { expect } from 'chai';
 
 describe('Yield', (): void => {
@@ -8,9 +7,9 @@ describe('Yield', (): void => {
 
     expect(testYield.value()).to.equal(0);
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: 0, provider: 'initial' }]);
   });
@@ -95,18 +94,18 @@ describe('Yield', (): void => {
     const testYield: Yield = new Yield(1, 'test-1');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: 1, provider: 'test-1' }]);
 
-    testYield.add(new YieldValue(2, 'test-2'));
+    testYield.add(2, 'test-2');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: 1, provider: 'test-1' },
@@ -117,9 +116,9 @@ describe('Yield', (): void => {
     testYield.add(3, 'test-3');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: 1, provider: 'test-1' },
@@ -131,14 +130,14 @@ describe('Yield', (): void => {
     const testYield2 = new Yield(4, 'test-4');
 
     testYield2.add(new Yield(5, 'test-5'));
-    testYield2.add(new YieldValue(6, 'test-6'));
+    testYield2.add(6, 'test-6');
 
     testYield.add(testYield2, 'test-7');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: 1, provider: 'test-1' },
@@ -149,22 +148,22 @@ describe('Yield', (): void => {
     expect(testYield.value()).to.equal(21);
   });
 
-  it("should not use the `YieldValue`'s provider when `add`ed with a truthy provider passed", (): void => {
+  it("should not use the `Yield`'s provider when `add`ed with a truthy provider passed", (): void => {
     const testYield: Yield = new Yield(1, 'test-1');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: 1, provider: 'test-1' }]);
 
-    testYield.add(new YieldValue(1, 'test-2'), 'test-3');
+    testYield.add(new Yield(1, 'test-2'), 'test-3');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: 1, provider: 'test-1' },
@@ -177,18 +176,18 @@ describe('Yield', (): void => {
     const testYield: Yield = new Yield(-1, 'test-1');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: -1, provider: 'test-1' }]);
 
-    testYield.subtract(new YieldValue(2, 'test-2'));
+    testYield.subtract(2, 'test-2');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: -1, provider: 'test-1' },
@@ -199,9 +198,9 @@ describe('Yield', (): void => {
     testYield.subtract(3, 'test-3');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: -1, provider: 'test-1' },
@@ -213,16 +212,16 @@ describe('Yield', (): void => {
     const testYield2 = new Yield(4, 'test-4');
 
     testYield2.add(new Yield(5, 'test-5'));
-    testYield2.add(new YieldValue(6, 'test-6'));
+    testYield2.add(new Yield(6, 'test-6'));
 
     expect(testYield2.value()).to.equal(15);
 
     testYield.subtract(testYield2, 'test-7');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: -1, provider: 'test-1' },
@@ -237,18 +236,18 @@ describe('Yield', (): void => {
     const testYield: Yield = new Yield(-1, 'test-1');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: -1, provider: 'test-1' }]);
 
-    testYield.subtract(new YieldValue(2, 'test-2'), 'test-3');
+    testYield.subtract(new Yield(2, 'test-2'), 'test-3');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: -1, provider: 'test-1' },
@@ -261,18 +260,18 @@ describe('Yield', (): void => {
     const testYield: Yield = new Yield(1, 'test-1');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: 1, provider: 'test-1' }]);
 
     testYield.add(2, 'test-2');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: 1, provider: 'test-1' },
@@ -282,9 +281,9 @@ describe('Yield', (): void => {
     testYield.subtract(1, 'test-3');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([
       { value: 1, provider: 'test-1' },
@@ -295,9 +294,9 @@ describe('Yield', (): void => {
     testYield.set(4, 'test-4');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: 4, provider: 'test-4' }]);
     expect(testYield.value()).to.equal(4);
@@ -305,19 +304,19 @@ describe('Yield', (): void => {
     testYield.set(new Yield(5), 'test-5');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: 5, provider: 'test-5' }]);
     expect(testYield.value()).to.equal(5);
 
-    testYield.set(new YieldValue(6, 'test-6'));
+    testYield.set(6, 'test-6');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: 6, provider: 'test-6' }]);
     expect(testYield.value()).to.equal(6);
@@ -325,9 +324,9 @@ describe('Yield', (): void => {
     testYield.set(6, 'test-7');
 
     expect(
-      testYield.values().map((yieldValue: YieldValue): any => ({
-        value: yieldValue.value(),
-        provider: yieldValue.provider(),
+      testYield.values().map(([value, provider]: YieldValue): any => ({
+        value,
+        provider,
       }))
     ).to.eql([{ value: 6, provider: 'test-7' }]);
     expect(testYield.value()).to.equal(6);

@@ -6,7 +6,8 @@ import Yield from './Yield';
 export interface IYieldRegistry extends IConstructorRegistry<Yield> {}
 export declare class YieldRegistry
   extends ConstructorRegistry<Yield>
-  implements IYieldRegistry {
+  implements IYieldRegistry
+{
   constructor();
 }
 export declare const instance: YieldRegistry;

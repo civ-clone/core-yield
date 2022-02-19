@@ -8,7 +8,8 @@ export interface IYieldRegistry extends IConstructorRegistry<Yield> {}
 
 export class YieldRegistry
   extends ConstructorRegistry<Yield>
-  implements IYieldRegistry {
+  implements IYieldRegistry
+{
   constructor() {
     super(Yield);
   }
