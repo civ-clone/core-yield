@@ -12,7 +12,8 @@ export interface IYield extends IDataObject {
   values(): YieldValue[];
 }
 export declare class Yield extends DataObject implements IYield {
-  #private;
+  private _values;
+  private _valueCache;
   constructor(value?: Yield | number, provider?: string);
   add(value: Yield | number, provider?: string): void;
   clone(): Yield;

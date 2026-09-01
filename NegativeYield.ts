@@ -1,4 +1,4 @@
-import { IConstructor } from "@civ-clone/core-registry/Registry";
+import { IConstructor } from '@civ-clone/core-registry/Registry';
 import Yield from './Yield';
 
 const negate = (value: Yield | number): number => {

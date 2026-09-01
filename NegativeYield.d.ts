@@ -1,3 +1,4 @@
+import { IConstructor } from '@civ-clone/core-registry/Registry';
 import Yield from './Yield';
 export declare class NegativeYield extends Yield {
   add(value: Yield | number, provider?: string): void;
@@ -5,4 +6,4 @@ export declare class NegativeYield extends Yield {
   subtract(value: Yield | number, provider?: string): void;
 }
 export default NegativeYield;
-export declare const makeNegative: (Target: typeof Yield) => void;
+export declare const makeNegative: (Target: IConstructor) => void;

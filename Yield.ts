@@ -15,8 +15,8 @@ export interface IYield extends IDataObject {
 }
 
 export class Yield extends DataObject implements IYield {
-  #values: YieldValue[] = [];
-  #valueCache: number | null = null;
+  private _values: YieldValue[] = [];
+  private _valueCache: number | null = null;
 
   constructor(value: Yield | number = 0, provider = 'initial') {
     super();
@@ -31,9 +31,9 @@ export class Yield extends DataObject implements IYield {
       return this.add(value.value(), provider);
     }
 
-    this.#values.push([value, provider]);
+    this._values.push([value, provider]);
 
-    this.#valueCache = null;
+    this._valueCache = null;
   }
 
   clone(): Yield {
@@ -41,15 +41,15 @@ export class Yield extends DataObject implements IYield {
   }
 
   set(value: Yield | number, provider = ''): void {
-    this.#values.splice(0);
+    this._values.splice(0);
 
     if (value instanceof Yield) {
       return this.set(value.value(), provider);
     }
 
-    this.#values.push([value, provider]);
+    this._values.push([value, provider]);
 
-    this.#valueCache = value;
+    this._valueCache = value;
   }
 
   subtract(value: Yield | number, provider = ''): void {
@@ -57,24 +57,24 @@ export class Yield extends DataObject implements IYield {
       return this.subtract(value.value(), provider);
     }
 
-    this.#values.push([-value, provider]);
+    this._values.push([-value, provider]);
 
-    this.#valueCache = null;
+    this._valueCache = null;
   }
 
   value(): number {
-    if (this.#valueCache === null) {
-      this.#valueCache = this.#values.reduce(
+    if (this._valueCache === null) {
+      this._valueCache = this._values.reduce(
         (total: number, [yieldValue]: YieldValue): number => total + yieldValue,
         0
       );
     }
 
-    return this.#valueCache;
+    return this._valueCache;
   }
 
   values(): YieldValue[] {
-    return this.#values;
+    return this._values;
   }
 }
 
