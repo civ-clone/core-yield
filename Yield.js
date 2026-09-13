@@ -46,5 +46,6 @@ class Yield extends DataObject_1.DataObject {
     }
 }
 exports.Yield = Yield;
+Yield.transient = ['_valueCache'];
 exports.default = Yield;
 //# sourceMappingURL=Yield.js.map

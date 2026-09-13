@@ -12,6 +12,7 @@ export interface IYield extends IDataObject {
   values(): YieldValue[];
 }
 export declare class Yield extends DataObject implements IYield {
+  static readonly transient: string[];
   private _values;
   private _valueCache;
   constructor(value?: Yield | number, provider?: string);

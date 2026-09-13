@@ -15,6 +15,7 @@ export interface IYield extends IDataObject {
 }
 
 export class Yield extends DataObject implements IYield {
+  static readonly transient = ['_valueCache'];
   private _values: YieldValue[] = [];
   private _valueCache: number | null = null;
 
